@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../../Components/Header/Header'
 import Footer from '../../Components/Footer/Footer'
 
@@ -6,6 +6,9 @@ import iconChat from '../../Assets/img/icon-chat.png'
 import iconMoney from '../../Assets/img/icon-money.png'
 import iconSecurity from '../../Assets/img/icon-security.png'
 const Home = () => {
+  useEffect(()=>{
+    document.title = `ArgentBank - Accueil`
+  })
   return (
     <>
     <Header />

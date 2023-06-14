@@ -4,7 +4,7 @@ import React from "react"
 import Home from "../Views/Home/Home"
 import SignIn from "../Views/SignIn/SignIn"
 import Dashboard from "../Views/Dashboard/Dashboard"
-// import Error from "../Views/Error/Error"
+import Error from "../Views/Error/Error"
 
 // Création des routes
 const routes = [
@@ -17,13 +17,13 @@ const routes = [
 		component: <SignIn />,
 	},
 	{
-		path: "/dashboard/user:",
+		path: "/profile",
 		component: <Dashboard />,
 	},
-	// {
-	// 	path: "/*",
-	// 	component: <Error />,
-	// },
+	{
+		path: "/*",
+		component: <Error />,
+	},
 ]
 
 const Path = (route) => route.component

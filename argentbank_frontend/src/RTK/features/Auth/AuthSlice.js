@@ -1,21 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
+import { BACKEND_URL } from "../../Constante"
 
 const initialState = {
 	isLoading: false,
 	data: [],
 	token: null,
 	error: null,
-	connected: false,
 }
-
-const backendURL = "http://127.0.0.1:3001"
 
 export const fetchUserAuth = createAsyncThunk(
 	"auth/fetchUserAuth",
 	async ({ email, password }) => {
-		const res = await axios.post(
-			`${backendURL}/api/v1/user/login`,
+		const { data } = await axios.post(
+			`${BACKEND_URL}/api/v1/user/login`,
 			{
 				email,
 				password,
@@ -26,7 +24,7 @@ export const fetchUserAuth = createAsyncThunk(
 				},
 			}
 		)
-		return res.data
+		return data
 	}
 )
 
@@ -39,8 +37,10 @@ const authSlice = createSlice({
 			state.data = []
 			state.token = null
 			state.error = null
-			state.connected = false
 			localStorage.removeItem("token")
+		},
+		setLoading: (state, action) => {
+			state.isLoading = action.payload
 		},
 	},
 	extraReducers: (builder) => {
@@ -49,11 +49,10 @@ const authSlice = createSlice({
 				state.isLoading = true
 			})
 			.addCase(fetchUserAuth.fulfilled, (state, { payload }) => {
-				state.isLoading = false
+				// state.isLoading = false
 				state.data = payload
 				state.token = payload.body.token
 				state.error = null
-				state.connected = true
 				localStorage.setItem("token", payload.body.token)
 			})
 			.addCase(fetchUserAuth.rejected, (state, action) => {
@@ -61,10 +60,9 @@ const authSlice = createSlice({
 				state.data = []
 				state.token = false
 				state.error = action.error.message
-				state.connected = false
 			})
 	},
 })
 
 export default authSlice.reducer
-export const { logOut } = authSlice.actions
+export const { logOut, setLoading } = authSlice.actions
