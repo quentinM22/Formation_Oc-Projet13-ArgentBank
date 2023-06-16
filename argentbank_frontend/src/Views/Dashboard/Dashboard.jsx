@@ -29,7 +29,7 @@ const Dashboard = () => {
         }, 1000)
     }  
     token ? forceLoad() : navigate('/error') 
-  }, [dispatch]);
+  }, [dispatch, navigate, token]);
   useEffect(()=>{
     if (data.body) {
       document.title = `ArgentBank - Profil ${data.body.firstName} ${data.body.lastName}`
