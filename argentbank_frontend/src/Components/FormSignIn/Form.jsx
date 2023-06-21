@@ -36,10 +36,8 @@ const Form = () => {
 	 * handleSubmit => Validation de formulaire
 	 * @param {Event} e 
 	 */
-	const handleSubmit = (e) => {
+	const handleSubmit = async(e) => {
 		e.preventDefault()
-		console.log(email)
-		console.log(password)
 		const divInput = document.querySelectorAll(".input-wrapper")
 		const emailValue = document.querySelector("#username").value
 		const passwordValue = document.querySelector("#password").value
@@ -63,15 +61,19 @@ const Form = () => {
 				divInput[1].appendChild(spanErrorPassword)
 			}
 		} else {
-			dispatch(fetchUserAuth({ email, password }))
-			setTimeout(() => {
+			const res = await dispatch(fetchUserAuth({ email, password }))
+			if(res.payload){
+				setTimeout(()=> {
+					const token = localStorage.getItem("token");
+						dispatch(fetchUser(token));
+						dispatch(setLoading(false))
+						navigate("/profile");
+				},1000)
+			}
+			setTimeout(()=> {
 				dispatch(setLoading(false))
-				error ? navigate("/error") : navigate("/profile")
-
-				const token = localStorage.getItem("token")
-				dispatch(fetchUser(token))
-			}, 1000)
-		}
+			},1000)
+		  }
 	}
 	/**
 	 * handleRememberMeChange => Gestion Remember me
@@ -90,6 +92,7 @@ const Form = () => {
 			localStorage.removeItem("password", password)
 		}
 	}
+	
 	return (
 		<>
 			{isLoading ? (
@@ -123,6 +126,15 @@ const Form = () => {
 						/>
 						<label for="remember-me">Remember me</label>
 					</div>
+					{
+						 error ?
+						 <small className="error-form" id="errorAuth">
+							Error User Authentification<br/>
+							{error}
+						</small>
+						  : null
+					}
+					
 					{/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
 					{/* <NavLink type='submit' className="sign-in-button">Sign In</NavLink> */}
 					{/* <!-- SHOULD BE THE BUTTON BELOW --> */}

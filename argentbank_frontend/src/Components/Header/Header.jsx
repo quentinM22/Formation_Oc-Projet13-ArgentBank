@@ -14,6 +14,7 @@ const Header = () => {
 		dispatch(logOut())
 		navigate("/")
 	}
+	
 	return (
 		<nav className="main-nav">
 			<NavLink className="main-nav-logo" to="/">

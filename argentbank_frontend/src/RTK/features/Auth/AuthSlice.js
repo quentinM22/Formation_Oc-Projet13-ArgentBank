@@ -56,7 +56,7 @@ const authSlice = createSlice({
 				localStorage.setItem("token", payload.body.token)
 			})
 			.addCase(fetchUserAuth.rejected, (state, action) => {
-				state.isLoading = false
+				state.isLoading = true
 				state.data = []
 				state.token = false
 				state.error = action.error.message

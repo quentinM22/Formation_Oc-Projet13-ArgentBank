@@ -15,10 +15,10 @@ const Dashboard = () => {
   // Global State
   const {data} = useSelector(state => state.user)
   const {isLoading} = useSelector(state => state.user)
-  const {error} = useSelector(state => state.user)
+  // const {error} = useSelector(state => state.user)
   // other Hook
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   // Var
   const token = localStorage.getItem('token')
 
@@ -28,8 +28,9 @@ const Dashboard = () => {
         dispatch(setLoading(false))  
         }, 1000)
     }  
-    token ? forceLoad() : navigate('/error') 
-  }, [dispatch, navigate, token]);
+    token && forceLoad()
+    //  : navigate('/error') 
+  }, [dispatch, token]);
   useEffect(()=>{
     if (data.body) {
       document.title = `ArgentBank - Profil ${data.body.firstName} ${data.body.lastName}`
@@ -58,13 +59,14 @@ const Dashboard = () => {
       
       
 	}
+  console.log(data);
   return (
     <>
       {isLoading ? (
         <Loader />
       ) : (
         <>
-          { error || !data.body ? (
+          { !data.body ? (
           <Navigate to="/error" />
           ) :  (
             <>
@@ -72,7 +74,12 @@ const Dashboard = () => {
               <main className="main bg-dark">
                 <div className="header">
                   {toggle ? (
-                    <form onSubmit={(e) => handleSubmit(e)}>
+                      <>
+                      <h1>
+                        Welcome back
+                        <br />
+                      </h1>
+                    <form className='form-rename' onSubmit={(e) => handleSubmit(e)}>
                       <div>
                         <input
                           type="text"
@@ -80,21 +87,22 @@ const Dashboard = () => {
                           value={firstName}
                           onChange={(e) => setFirstName(e.target.value)}
                         />
-                      </div>
-                      <div>
-                        <input
+                         <input
                           type="text"
                           placeholder={data.body.lastName}
                           value={lastName}
                           onChange={(e) => setLastName(e.target.value)}
                         />
+                        <span className='error-form'></span>
                       </div>
-                      <span className='error-form'></span>
-                      <button className="edit-button" type="submit">Modifier</button>
-                      <button className="edit-button" onClick={() => setToggle(!toggle)}>Annuler</button>
+                      <div>
+                      <button className="edit-button" type="submit">Save</button>
+                      <button className="edit-button" onClick={() => setToggle(!toggle)}>Cancel</button>
+                      </div>
                     </form>
+                    </>
                   ) : (
-                    <div className="header">
+                    <>
                       <h1>
                         Welcome back
                         <br />
@@ -103,7 +111,7 @@ const Dashboard = () => {
                       <button className="edit-button" onClick={() => setToggle(!toggle)}>
                         Edit Name
                       </button>
-                    </div>
+                    </>
                   )}
                 </div>
                 <h2 className="sr-only">Accounts</h2>

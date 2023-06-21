@@ -266,7 +266,8 @@ button.main-nav-item {
 	font-weight: bold;
 	padding: 10px;
 }
-.edit-button:hover {
+.edit-button:hover,
+.sign-in-button:hover {
 	cursor: pointer;
 	border-color: #008554;
 	background-color: #008554;
@@ -305,4 +306,17 @@ button.main-nav-item {
 
 .error-form {
 	color: red;
+}
+.form-rename {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+.form-rename > div > input {
+	padding: 10px;
+}
+.form-rename > div > input,
+.form-rename > div > button {
+	margin: 10px;
 }
