@@ -1,0 +1,334 @@
+openapi: 3.0.1
+info:
+  title: Bank Argent API documentation
+  description: Contains all available API endpoints in this codebase
+  termsOfService: http://swagger.io/terms/
+  version: 1.0.0
+servers:
+  - url: http://localhost:3001/api/v1
+paths:
+  /user/login:
+    post:
+      tags:
+        - User Module
+      summary: Login
+      description: API for Login
+      requestBody:
+        description: Login Payload
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      responses:
+        '200':
+          description: Login Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Invalid Fields
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      x-codegen-request-body-name: body
+  /user/signup:
+    post:
+      tags:
+        - User Module
+      summary: Signup
+      description: API for Signup
+      requestBody:
+        description: Signup Payload
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '200':
+          description: Signup Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid Fields
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      x-codegen-request-body-name: body
+  /user/profile:
+    put:
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for updating a user profile
+      parameters:
+        - name: Authorization
+          in: header
+          description: Attach Bearer JWT token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Update user profile attributes
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        '200':
+          description: User profile retrieved successully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid Fields
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+        - Bearer: []
+      x-codegen-request-body-name: body
+    post:
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for fetching a user profile
+      parameters:
+        - name: Authorization
+          in: header
+          description: Attach Bearer JWT token
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User profile retrieved successully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid Fields
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+        - Bearer: []
+  /user/transactions:
+    get:
+      tags:
+        - User transactions
+      summary: User transactions API
+      description: API for account checking Transactions
+      parameters:
+        - name: Authorization
+          in: header
+          description: Attach Bearer JWT token
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detail transactions successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactions'
+        '400':
+          description: Invalid Fields
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+        - Bearer: []
+  /user/transactions/{transaction_id}:
+    get:
+      tags:
+        - User transactions
+      summary: User transaction API
+      description: API for account checking Transaction
+      parameters:
+        - name: Authorization
+          in: header
+          description: Attach Bearer JWT token
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: path
+          description: transaction detail
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Detail transaction successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction_detail'
+        '400':
+          description: Invalid Fields
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+        - Bearer: []
+    put:
+      tags:
+        - User transactions
+      summary: User transaction Informations API
+      description: API for Informations Transaction
+      parameters:
+        - name: Authorization
+          in: header
+          description: Attach Bearer JWT token
+          required: true
+          schema:
+            type: string
+        - name: transaction_id
+          in: path
+          description: modified information
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Transaction_info'
+        required: false
+      responses:
+        '200':
+          description: modified information Successfully
+          content: {}
+        '400':
+          description: Invalid Fields
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+        - Bearer: []
+      x-codegen-request-body-name: param
+   
+   
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+          description: user email
+        password:
+          type: string
+          description: user password
+        firstName:
+          type: string
+          description: user first name
+        lastName:
+          type: string
+          description: user last name
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          description: user email
+        password:
+          type: string
+          description: user password
+    ApiResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+        body:
+          type: object
+          properties:
+            id:
+              type: string
+            email:
+              type: string
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+    UserProfile:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+    Transactions:
+      type: array
+      items:
+        type: object
+        properties:
+          date:
+            type: string
+            description: date transaction
+          description:
+            type: string
+            description: description transaction
+          amount:
+            type: number
+            description: amount transaction
+          balance:
+            type: number
+            description: solde account
+    Transaction_detail:
+      type: object
+      properties:
+        date:
+          type: string
+          description: date transaction
+        description:
+          type: string
+          description: description transaction
+        amount:
+          type: number
+          description: amount transaction
+        balance:
+          type: number
+          description: solde account
+        transactionType:
+          type: string
+          description: type transaction
+        category:
+          type: string
+          description: category transaction
+        notes:
+          type: string
+          description: notes transaction
+    Transaction_info:
+      type: object
+      properties:
+        note:
+          type: string
+          description: information note transaction
+        category:
+          type: string
+          description: information category transaction
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
