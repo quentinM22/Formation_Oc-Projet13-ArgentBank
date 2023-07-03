@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchUser, fetchUserUpdate, setLoading } from '../../RTK/features/User/UserSlice'
 import Loader from '../../Components/Loader/Loader'
 import { capitalizeFirstLetter } from '../../utils/capitalized'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 const Dashboard = () => {
   // Local State
@@ -29,7 +29,6 @@ const Dashboard = () => {
         }, 1000)
     }  
     token && forceLoad()
-    //  : navigate('/error') 
   }, [dispatch, token]);
   useEffect(()=>{
     if (data.body) {
