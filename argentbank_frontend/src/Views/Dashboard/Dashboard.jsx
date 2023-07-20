@@ -55,10 +55,7 @@ const Dashboard = () => {
       setTimeout(()=>{
         dispatch(setLoading(false))
       },1000)
-      
-      
 	}
-  console.log(data);
   return (
     <>
       {isLoading ? (

@@ -4,7 +4,7 @@ import logo from "../../Assets/img/argentBankLogo.png"
 const Loader = () => {
   return (
     <div className="loader">
-    <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     <img src={logo} alt="logo" />
     <div>Récupération des informations utilisateur</div>
     </div>

@@ -33,7 +33,7 @@ const Header = () => {
 							{" "}{user.body.firstName}
 						</NavLink>
 						<button className="main-nav-item" onClick={() => handleClick()}>
-						<i class="fa-sharp fa-solid fa-right-from-bracket"></i> logOut
+						<i className="fa-sharp fa-solid fa-right-from-bracket"></i> logOut
 						</button>
 					</>
 				) : (

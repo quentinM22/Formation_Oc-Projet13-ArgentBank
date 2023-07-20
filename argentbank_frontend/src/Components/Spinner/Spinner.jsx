@@ -3,7 +3,7 @@ import './Spinner.css'
 const Spinner = () => {
   return (
     <>
-    <div>Authentification </div><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    <div>Authentification </div><div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
     </>
   )
 }
